@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import xyz.madki.notes.DaggerNotesComponent
+import butterknife.Bind
+import butterknife.ButterKnife
 import xyz.madki.notes.R
 import xyz.madki.notes.data.Note
 import javax.inject.Inject
@@ -15,14 +16,16 @@ import javax.inject.Inject
 class NoteListActivity : AppCompatActivity() {
     private lateinit var notesComponent: NotesComponent
     @Inject lateinit var note: Note
+    @Bind(R.id.toolbar) lateinit var toolbar: Toolbar
+    @Bind(R.id.fab) lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        ButterKnife.bind(this)
+
         setSupportActionBar(toolbar)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Here's your note: $note", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()

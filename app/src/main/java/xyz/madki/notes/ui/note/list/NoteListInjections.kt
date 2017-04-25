@@ -15,6 +15,6 @@ interface NotesComponent {
 class NotesModule {
     @Provides
     fun provideNote(): Note {
-        return Note("MK", "Madhu", null, LocalDateTime.now())
+        return Note(1, "MK", "Madhu", null, LocalDateTime.now())
     }
 }
