@@ -26,7 +26,7 @@ class NoteListActivity : BaseActivity<NoteListPresenter, NotesComponent>(), Note
     override fun createComponent(): NotesComponent = DaggerNotesComponent
             .builder()
             .appComponent(App.component(this))
-            .notesModule(NotesModule(intent))
+            .noteListModule(NoteListModule(intent))
             .build()
 
     override fun addNewNoteClicks(): Observable<Unit> {

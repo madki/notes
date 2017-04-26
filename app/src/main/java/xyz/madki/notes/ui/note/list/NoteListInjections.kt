@@ -11,11 +11,11 @@ import xyz.madki.notes.ui.base.IActivityInjector
 import xyz.madki.notes.ui.base.PerActivity
 
 @PerActivity
-@Component(modules = arrayOf(NotesModule::class), dependencies = arrayOf(AppComponent::class))
+@Component(modules = arrayOf(NoteListModule::class), dependencies = arrayOf(AppComponent::class))
 interface NotesComponent: IActivityInjector<NoteListActivity>
 
 @Module
-class NotesModule(intent: Intent) {
+class NoteListModule(intent: Intent) {
     @Provides
     fun provideNote(): Note {
         return Note(1, "MK", "Madhu", null, LocalDateTime.now())
