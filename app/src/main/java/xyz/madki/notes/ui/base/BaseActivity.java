@@ -71,6 +71,7 @@ public abstract class BaseActivity<P extends BasePresenter, C extends IActivityI
   @SuppressWarnings("unchecked")
   protected void onStart() {
     super.onStart();
+    Timber.d("onStart called");
     getPresenter().takeView(this);
   }
 

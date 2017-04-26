@@ -1,10 +1,14 @@
 package xyz.madki.notes.ui.note.list
 
+import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import butterknife.Bind
 import com.jakewharton.rxbinding2.view.clicks
+import hugo.weaving.DebugLog
 import io.reactivex.Observable
 import timber.log.Timber
 import xyz.madki.notes.App
@@ -18,7 +22,22 @@ class NoteListActivity : BaseActivity<NoteListPresenter, NotesComponent>(), Note
 
     @Inject lateinit var note: Note
     @Bind(R.id.fab) lateinit var fab: FloatingActionButton
+    @Bind(R.id.rv_notes) lateinit var rvNotes: RecyclerView
     @Inject lateinit var noteListPresenter: NoteListPresenter
+    @Inject lateinit var noteListAdapter: NoteListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        rvNotes.layoutManager = LinearLayoutManager(this)
+        rvNotes.adapter = noteListAdapter
+    }
+
+    @DebugLog
+    override fun setData(notes: List<Note>) {
+        Timber.d("Notes in Act: %s", notes.joinToString(";;"))
+        noteListAdapter.setData(notes)
+    }
 
     override fun layout() = R.layout.activity_note_list
 
