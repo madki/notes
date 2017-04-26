@@ -5,8 +5,11 @@ import com.squareup.sqlbrite.BriteDatabase
 import io.reactivex.Observable
 import xyz.madki.notes.data.Note
 import xyz.madki.notes.util.toV2Observable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Db(private val database: BriteDatabase) {
+@Singleton
+class Db @Inject constructor(private val database: BriteDatabase) {
 
     fun getAllNotes(): Observable<List<Note>> {
         return database.createQuery(Note.TABLE, "SELECT * FROM ${Note.TABLE}")

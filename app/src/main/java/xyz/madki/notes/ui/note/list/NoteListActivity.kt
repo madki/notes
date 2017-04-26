@@ -1,39 +1,42 @@
 package xyz.madki.notes.ui.note.list
 
-import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import butterknife.Bind
-import butterknife.ButterKnife
+import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import xyz.madki.notes.App
 import xyz.madki.notes.R
 import xyz.madki.notes.data.Note
+import xyz.madki.notes.ui.base.BaseActivity
+import xyz.madki.notes.ui.note.create.NoteCreateActivity
 import javax.inject.Inject
 
-class NoteListActivity : AppCompatActivity() {
-    private lateinit var notesComponent: NotesComponent
+class NoteListActivity : BaseActivity<NoteListPresenter, NotesComponent>(), NoteListPresenter.IView {
+
     @Inject lateinit var note: Note
-    @Bind(R.id.toolbar) lateinit var toolbar: Toolbar
     @Bind(R.id.fab) lateinit var fab: FloatingActionButton
+    @Inject lateinit var noteListPresenter: NoteListPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notes)
-        ButterKnife.bind(this)
+    override fun layout() = R.layout.activity_note_list
 
-        setSupportActionBar(toolbar)
+    override fun getPresenter() = noteListPresenter
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Here's your note: $note", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+    override fun createComponent(): NotesComponent = DaggerNotesComponent
+            .builder()
+            .appComponent(App.component(this))
+            .notesModule(NotesModule(intent))
+            .build()
 
-        notesComponent = DaggerNotesComponent.builder().build()
-        notesComponent.inject(this)
+    override fun addNewNoteClicks(): Observable<Unit> {
+        return fab.clicks()
     }
+
+    override fun openNoteCreateScreen() {
+        NoteCreateActivity.open(this)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
