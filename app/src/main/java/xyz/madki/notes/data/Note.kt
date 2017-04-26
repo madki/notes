@@ -6,11 +6,11 @@ import xyz.madki.notes.util.toDateString
 
 
 data class Note(
-        val id: Int?,
+        val id: Int? = null,
         val title: String,
         val text: String,
         val photo: String?,
-        val created: LocalDateTime
+        val created: LocalDateTime = LocalDateTime.now()
 ) {
     fun toContentValues(): ContentValues {
         val contentValues = ContentValues()

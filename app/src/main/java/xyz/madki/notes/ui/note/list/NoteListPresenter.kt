@@ -2,6 +2,7 @@ package xyz.madki.notes.ui.note.list
 
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
+import timber.log.Timber
 import xyz.madki.notes.ui.base.BasePresenter
 import xyz.madki.notes.ui.base.IBaseView
 import xyz.madki.notes.ui.base.PerActivity
@@ -11,7 +12,7 @@ import javax.inject.Inject
 class NoteListPresenter @Inject constructor() : BasePresenter<NoteListPresenter.IView>() {
 
     override fun IView.connector() = arrayOf(
-            addNewNoteClicks().subscribeBy { openNoteCreateScreen() }
+            addNewNoteClicks().doOnNext { Timber.d("got a click") }.subscribeBy ({ openNoteCreateScreen() })
     )
 
     interface IView : IBaseView {

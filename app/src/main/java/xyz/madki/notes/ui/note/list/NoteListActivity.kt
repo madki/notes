@@ -6,6 +6,7 @@ import android.view.MenuItem
 import butterknife.Bind
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
+import timber.log.Timber
 import xyz.madki.notes.App
 import xyz.madki.notes.R
 import xyz.madki.notes.data.Note
@@ -34,6 +35,7 @@ class NoteListActivity : BaseActivity<NoteListPresenter, NotesComponent>(), Note
     }
 
     override fun openNoteCreateScreen() {
+        Timber.d("Open note create called")
         NoteCreateActivity.open(this)
     }
 

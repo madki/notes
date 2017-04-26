@@ -5,4 +5,7 @@
     <string name="note">Note</string>
     <string name="notes">Notes</string>
     <string name="add_new_note">Add New Note</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="photo_url">Url for a pic</string>
 </resources>
